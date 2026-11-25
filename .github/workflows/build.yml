@@ -1,0 +1,26 @@
+name: Build DiamondClicks
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Geode mod
+        uses: geode-sdk/build-geode-mod@main
+        id: build
+        with:
+          sdk: latest
+          build-config: RelWithDebInfo
+      - name: Upload .geode
+        uses: actions/upload-artifact@v4
+        with:
+          name: DiamondClicks-geode
+          path: ${{ steps.build.outputs.build-output }}
